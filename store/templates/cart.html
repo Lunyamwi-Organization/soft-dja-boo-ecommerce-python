@@ -4,9 +4,20 @@
 {% block title %}
 Cartoon
 {% endblock %}
-
 {% block content %}
- <div class="text-center">
+    {% if not cart_items %}<!--if the cart item is empty we can display a message-->
+    <div class="text-center">
+    <br>
+    <h1 class="text-center product_title">
+        Your shopping Cart is empty
+    </h1>
+    <br>
+    <p class="text-center">
+        Please click <a href="{% url 'home' %}"> here </a>to continue shopping
+    </p>
+    </div>
+    {% else %}<!--display all cart items and the total amount-->
+<div class="text-center">
   <br>
   <div class="text-center product_title">
    Your Shopping Cart
@@ -15,8 +26,8 @@ Cartoon
 <!--Display a table -->
 <div class="row mx-auto">
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-    <table class="table">
-      <thread>
+    <table class="table cart_table">
+      <thread class="cart_thread">
           <tr>
               <th colspan="4">
                   Your items
@@ -24,42 +35,49 @@ Cartoon
           </tr>
       </thread> 
       <!--Add 4 columns to my table--> 
-      {% for i in '123' %}
+      {% for cart_item in cart_items %}
          <tr>
              <td>
-                 <a href=""><!--Display image in the first column-->
-                  <img src="{% static 'img/product1.jpg' %}" width="100" height= "100" alt="">
+                 <a href="cart_item.product.get_url"><!--Display image in the first column-->
+                  <img src="{{cart_item.product.image.url}}" width="100" height= "100" alt="">
                  </a>
              </td>
             <td class="text-left">
-                iPhone S+
+                {{cart_item.product.name}}
                 <br>
-                 SKU: 5 
+                 SKU:  {{cart_item.product.id}}
                  <br>
-                 Unit Price: KES 100000
+                 Unit Price: KES {{cart_item.product.price}}
                  <br>
-                 Qty: 2*100000
+                 Qty:  {{cart_item.quantity}}*{{cart_item.product.price}}
             </td>
             <td>
-                KES 200000
+                KES  {{cart_item.sub_total}}
             </td>
+            <!--check items against available stock-->
+            {% if cart_item.quantity < cart_item.product.stock %}
             <td><!--another column for the icons &nbsp creates space between these icons-->
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-plus-circle"></i>
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-minus-circle"></i>
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-trash-alt"></i>
-
-                </a>
+                &nbsp;<a href="{% url 'add_cart' cart_item.product.id %}" style="text-decoration: none;"><i class="fas fa-plus-circle cart_icon"></i>
+                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-minus-circle cart_icon"></i>
+                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-trash-alt cart_icon"></i></a>
             </td>
+            {% else %}<!--display minus and trash icon, hide the other-->
+            <td>
+                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-minus-circle cart_icon"></i>
+                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-trash-alt cart_icon"></i></a>
+            </td>
+            {% endif %}
          </tr>
       {% endfor %}
+    
     </table>
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-        <table class="table">
-            <thread>
+        <table class="table cart_table">
+            <thread class="cart_thread">
                 <tr>
                     <th >
-                        Check Out 
+                        Check Out
                     </th>
                 </tr>
             </thread> 
@@ -71,13 +89,13 @@ Cartoon
              </tr>
              <tr>
                  <td class="text-left">
-                   Your total is: <strong>KES 200000</strong>  
+                   Your total is: <strong>{{total}}</strong>  
                  </td>
              </tr>
             </tbody> 
           </table>
           <div class="mx-auto">
-              <a href="" style="text-decoration: none;"><!--text decoration removes the underline-->
+              <a href="{% url 'home' %}" style="text-decoration: none;"><!--text decoration removes the underline-->
                   <button type="button" class="btn btn-lg btn-block bg-dark text-white">
                     Continue Shopping  
                   </button>
@@ -88,5 +106,5 @@ Cartoon
 
 </div>
 
-
+   {% endif %}
 {% endblock content %}

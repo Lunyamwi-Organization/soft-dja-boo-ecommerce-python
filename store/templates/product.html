@@ -20,7 +20,11 @@ Product
               {% if product.stock <= 0 %}
               <p class="text-justify product_text"><b>Out Of Stock</b></p>
               {% else %}
-              <a href="">Add to Cart </a>
+              <a href="{% url 'add_cart' product.id %}"><!--when the add to cart is clicked the add_cart url will be clicked-->
+              <button type="button" name="button" class="btn btn-secondary">
+                Add to Cart
+              </button>
+             </a>
               {% endif %}
             </div>  
         </div>

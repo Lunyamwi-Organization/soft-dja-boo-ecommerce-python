@@ -28,7 +28,8 @@ store_patterns =[
     path(('home/'),store_views.homePage,name='home'),
     path('category/<slug:category_slug>',store_views.homePage, name ='products_by_category'),
     path(('category/<slug:category_slug>/<slug:product_slug>'),store_views.productPage,name='product_detail'),
-    path(('cart/'),store_views.cartPage,name='cart'),
+    path('cart/add/<int:product_id>',store_views.add_cart, name='add_cart'),
+    path('cart',store_views.cart_detail, name='cart_detail'),#updates cart view
 ]
 urlpatterns = [
     path('admin/', admin.site.urls),
