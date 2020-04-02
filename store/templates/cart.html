@@ -58,13 +58,13 @@ Cartoon
             {% if cart_item.quantity < cart_item.product.stock %}
             <td><!--another column for the icons &nbsp creates space between these icons-->
                 &nbsp;<a href="{% url 'add_cart' cart_item.product.id %}" style="text-decoration: none;"><i class="fas fa-plus-circle cart_icon"></i>
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-minus-circle cart_icon"></i>
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-trash-alt cart_icon"></i></a>
+                &nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}" style="text-decoration: none;"><i class="fas fa-minus-circle cart_icon"></i>
+                &nbsp;<a href="{% url 'cart_remove_product' cart_item.product.id %}" style="text-decoration: none;"><i class="fas fa-trash-alt cart_icon"></i></a>
             </td>
             {% else %}<!--display minus and trash icon, hide the other-->
             <td>
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-minus-circle cart_icon"></i>
-                &nbsp;<a href="" style="text-decoration: none;"><i class="fas fa-trash-alt cart_icon"></i></a>
+                &nbsp;<a href="{% url 'cart_remove' cart_item.product.id %}" style="text-decoration: none;"><i class="fas fa-minus-circle cart_icon"></i>
+                &nbsp;<a href="{% url 'cart_remove_product' cart_item.product.id %}" style="text-decoration: none;"><i class="fas fa-trash-alt cart_icon"></i></a>
             </td>
             {% endif %}
          </tr>

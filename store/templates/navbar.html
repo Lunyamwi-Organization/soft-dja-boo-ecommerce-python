@@ -20,6 +20,14 @@
                </li><!--realised that this has to be here otherwise I'll see no items dropped down-->
                 <li class="nav-item"><a class="nav-link text-light text-uppercase font-weight-bold px-3" href="">Contact</a></li>
                 <li class="nav-item"><a class="nav-link text-light text-uppercase font-weight-bold px-3" href="">About</a></li>
+                <!--CHECK WHETHER ITEM COUNT IS GREATER THAN ZERO OR NOT-->
+                {% if item_count > 0 %}
+                <li class="nav-item"><a class="nav-link text-light text-uppercase font-weight-bold px-3" href="{% url 'cart_detail' %}"><!--go to the cart detail page whwnever the cart icon is clicked-->
+                    <i class="class fas fa-shopping-cart"></i>({{item_count}})
+                  
+                </a>
+                {% endif %}
+            </li>
             </ul>
    
        <form class="form-inline ml-3">
